@@ -240,7 +240,7 @@ class RestApi
             if ($decodedResponse = json_decode($response)) {
                 $exception = $code . " - Error making request to server: " . $decodedResponse->message;
                 if (isset($decodedResponse->parameters)) {
-                    $parameters = (is_object($decodedResponse->parameters)) ? json_encode($decodedResponse->parameters) : $decodedResponse->parameters;
+                    $parameters = (is_object($decodedResponse->parameters) || is_array($decodedResponse->parameters)) ? json_encode($decodedResponse->parameters) : $decodedResponse->parameters;
                     $exception = "{$code} - Error making request to server: {$decodedResponse->message} - {$parameters}";
                 }
                 throw new \Exception($exception, $code);
